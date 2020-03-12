@@ -19,7 +19,8 @@ const init = async () => {
     engines: { ejs: Ejs },
     relativeTo: __dirname,
     path: 'views',
-    layout: true
+    layout: true,
+    isCached: false
   });
 
   // Route configuration
