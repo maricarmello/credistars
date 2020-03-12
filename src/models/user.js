@@ -15,7 +15,7 @@ class User {
   }
 
   static async all() {
-    let users = await dbConnection.query("SELECT * FROM `users`");
+    let users = await dbConnection.query("SELECT * FROM `users`", { type: dbConnection.QueryTypes.SELECT });
 
     return users;
   }
@@ -24,8 +24,11 @@ class User {
     return User.storedData.find((u) => u.id == id);
   }
 
-  static create(attrs) {
+  static async create(attrs) {
     attrs.id = User.storedData.length; 
+    let users = await dbConnection.query(`INSERT INTO users (name, email) 
+        VALUES ("${attrs.name}", "${attrs.email}")`, { type: dbConnection.QueryTypes.INSERT });
+
     User.storedData.push(new User(attrs));
     return true;
   }
@@ -41,11 +44,5 @@ class User {
     return true;
   }
 }
-
-User.storedData = [];
-
-User.create({ id: 1, name: 'Homer' })
-User.create({ id: 2, name: 'Lisa' })
-User.create({ id: 3, name: 'Bart' })
 
 module.exports = User;

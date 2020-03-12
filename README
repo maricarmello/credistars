@@ -15,7 +15,14 @@ SQLite is a lightweight database implementation that allows us to store all our 
 
 It doesn't need any aditional steps besides the initial `npm install` to work and we can query the database using SQL: `SELECT`, `INSERT`, `UPDATE`, etc...
 
-## Migration commands
+## Managing database schema changes
 
-* Running: `npx sequelize-cli db:migrate`
-* Creating `nx sequelize-cli migration:create --name create-users-table`
+This project uses the `umzug` library to keep track of database changes and keep your current database in sync with those changes. 
+
+If you want to create a table, change a column or alter any part of the schema database follow these steps:
+
+1) Create a file on the db/migrations folder. The name should start with the current count of files inside the folder
+2) Run migration manager script with `node src/run_migrations.js`
+
+This script will check if the migration has already been executed on your machine. If not, it will execute the UP property of the migration and mark it as executed using a table created automatically in order to track the history of executed migrations.
+

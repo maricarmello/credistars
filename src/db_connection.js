@@ -9,4 +9,7 @@ const sequelize = new Sequelize(null, null, null, {
   storage: Path.join(__dirname, '../db/database.sqlite')
 });
 
+sequelize.runQuery = async (...args) => {
+  return sequelize.query(...args).results;
+};
 module.exports = sequelize;

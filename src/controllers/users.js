@@ -1,8 +1,9 @@
 const User = require('../models/user');
 
 module.exports = {
-  index: (request, response) => {
-    return response.view('users/index', { users: User.all() });
+  index: async (request, response) => {
+    let users = await User.all();
+    return response.view('users/index', { users: users });
   },
   create: (request, response) => {
     if (User.create({ name: request.query.name })) {
