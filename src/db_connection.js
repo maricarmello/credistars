@@ -4,12 +4,15 @@ const Fs = require('fs');
 const Path = require('path');
 const Sequelize = require('sequelize');
 
+let storage = Path.join(__dirname, '../db/database.sqlite');
+
+if (process.env.NODE_ENV == 'test') {
+  storage = ':memory:'
+}
+
 const sequelize = new Sequelize(null, null, null, {
   dialect: 'sqlite',
-  storage: Path.join(__dirname, '../db/database.sqlite')
+  storage: storage
 });
 
-sequelize.runQuery = async (...args) => {
-  return sequelize.query(...args).results;
-};
 module.exports = sequelize;

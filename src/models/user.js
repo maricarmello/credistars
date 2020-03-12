@@ -16,7 +16,6 @@ class User {
 
   static async all() {
     let users = await dbConnection.query("SELECT * FROM `users`", { type: dbConnection.QueryTypes.SELECT });
-
     return users;
   }
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:devserver": "node_modules/nodemon/bin/nodemon.js src/main.js --watch",
-    "test": "jest"
+    "test": "node src/run_migrations.js && jest"
   },
   "author": "",
   "license": "ISC",

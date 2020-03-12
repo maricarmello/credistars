@@ -3,12 +3,6 @@ const Ejs = require('ejs');
 
 const dbConnection = require('./db_connection');
 
-const server = Hapi.server({
-  port: 3000,
-  host: '0.0.0.0'
-});
-
-
 async function configureHapi() {
   // Register plugins
   await server.register([
@@ -44,4 +38,14 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-configureHapi();
+const server = Hapi.server({
+  port: 3000,
+  host: '0.0.0.0'
+});
+
+
+configureHapi(server);
+
+module.exports = {
+  configureHapi: configureHapi
+}
