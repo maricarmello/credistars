@@ -1,3 +1,5 @@
+const dbConnection = require('../db_connection');
+
 class User {
   constructor(attrs){
     this._name = attrs.name;
@@ -12,8 +14,10 @@ class User {
     return this._id;
   }
 
-  static all() {
-    return User.storedData;
+  static async all() {
+    let users = await dbConnection.query("SELECT * FROM `users`");
+
+    return users;
   }
 
   static findById(id) {

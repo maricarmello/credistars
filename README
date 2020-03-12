@@ -6,3 +6,16 @@
 2. Run `npm install`
 3. Run `npm run start:devserver` if you change any file on the src folder the server will restart itself automagically
 4. Visit http://localhost:3000/
+
+# Database
+
+We will use SQL Lite as database. 
+
+SQLite is a lightweight database implementation that allows us to store all our data on a file (configured to be saved on the root folder of the application and to be ignored by git).
+
+It doesn't need any aditional steps besides the initial `npm install` to work and we can query the database using SQL: `SELECT`, `INSERT`, `UPDATE`, etc...
+
+## Migration commands
+
+* Running: `npx sequelize-cli db:migrate`
+* Creating `nx sequelize-cli migration:create --name create-users-table`

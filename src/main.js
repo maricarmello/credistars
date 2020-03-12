@@ -1,13 +1,15 @@
 const Hapi = require('hapi');
-
 const Ejs = require('ejs');
+
+const dbConnection = require('./db_connection');
 
 const server = Hapi.server({
   port: 3000,
   host: '0.0.0.0'
 });
 
-const init = async () => {
+
+async function configureHapi() {
   // Register plugins
   await server.register([
     require('@hapi/vision'),
@@ -26,14 +28,20 @@ const init = async () => {
   // Route configuration
   server.route(require('./routes'));
 
-  //Booting the server
-  await server.start();
-  console.log(`Server running at: ${server.info.uri}`);
-};
+  // Configuring our database
+  await dbConnection.sync().then(() => {
+    server.start((err) => {
+      Hoek.assert(!err, err);
+      console.log(`Server running at: ${server.info.uri}`);
+    });
+  });
+
+}
+
 
 process.on('unhandledRejection', (err) => {
   console.log(err);
   process.exit(1);
 });
 
-init();
+configureHapi();
