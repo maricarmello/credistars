@@ -1,8 +1,14 @@
 const Path = require('path');
 
+const home = require('./controllers/home.js');
 const users = require('./controllers/users.js');
 
 module.exports = [
+  {
+    method: 'GET',
+    path: '/',
+    handler: home.dashboard
+  },
   {
       method: 'GET',
       path: '/users',
@@ -28,7 +34,7 @@ module.exports = [
     // If none of the routes bellow have matched with the path
     // we try to search on the public_static_files directory
     method: 'GET',
-    path: '/{param*}',
+    path: '/assets/{param*}',
     handler: {
       directory: {
         path: Path.join(__dirname, 'public_static_files')
