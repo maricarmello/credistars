@@ -16,12 +16,17 @@ module.exports = [
   },
   {
       method: 'GET',
-      path: '/users/destroy/{id}',
-      handler: users.destroy
+      path: '/users/form/{id?}',
+      handler: users.form
   },
   {
       method: 'GET',
-      path: '/users/update',
+      path: '/users/delete/{id}',
+      handler: users.destroy
+  },
+  {
+      method: 'POST',
+      path: '/users/{id}',
       handler: users.update
   },
   {

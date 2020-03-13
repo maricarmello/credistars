@@ -1,0 +1,32 @@
+<%
+  let pageTitle = 'Adicionando usuário';
+
+  let formMethod = 'POST';
+  let formAction = '/users';
+
+  if (userToEdit.id) {
+    pageTitle = 'Editando usuário';
+    formAction = `/users/${userToEdit.id}`;
+  }
+%>
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"><%= pageTitle %></h1>
+</div>
+
+<form class="user" action='<%= formAction %>' method='POST'>
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <input value='<%= userToEdit.name %>' type="text" class="form-control" placeholder='Name' name='user_name'>
+    </div>
+    <div class="col-sm-6">
+      <input value='<%= userToEdit.email %>' type="text" class="form-control" placeholder='Email' name='user_email'>
+    </div>
+  </div>
+  <div class="form-group row">
+    <button class="btn btn-primary btn-user btn-block">
+      Salvar
+    </button>
+  </div>
+</form>

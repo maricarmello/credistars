@@ -2,42 +2,47 @@ const dbConnection = require('../db_connection');
 
 class User {
   constructor(attrs){
-    this._name = attrs.name;
-    this._id = attrs.id;
+    this.name = attrs.name;
+    this.email = attrs.email;
+    this.id = attrs.id;
   };
 
-  get name(){
-    return this._name;
-  }
-
-  get id(){
-    return this._id;
-  }
-
   static async all() {
-    let users = await dbConnection.query("SELECT * FROM `users`", { type: dbConnection.QueryTypes.SELECT });
-    return users;
+    let data = await dbConnection.query("SELECT * FROM `users`", { type: dbConnection.QueryTypes.SELECT });
+    return data.map((attr) => new User(attr));
   }
 
-  static findById(id) {
-    return User.storedData.find((u) => u.id == id);
+  static async findById(id) {
+    let data = await dbConnection.query("SELECT * FROM `users` WHERE id = :id", 
+    { 
+      replacements: {
+        id: id
+      },
+      type: dbConnection.QueryTypes.SELECT 
+    });
+
+    return new User(data[0]);
   }
 
   static async create(attrs) {
-    let users = await dbConnection.query(`INSERT INTO users (name, email) 
+    await dbConnection.query(`INSERT INTO users (name, email) 
         VALUES ("${attrs.name}", "${attrs.email}")`, { type: dbConnection.QueryTypes.INSERT });
 
     return true;
   }
 
-  destroy() {
-    User.storedData = User.storedData.filter((u) => u != this);
+  async destroy() {
+    
+    await dbConnection.query(`DELETE FROM users 
+        WHERE id='${this.id}'`, { type: dbConnection.QueryTypes.DELETE });
+
     return true;
   }
 
-
-  updateAttributes(newAttrs) {
-    this._name = newAttrs.name;
+  async updateAttributes(attrs) {
+    await dbConnection.query(`UPDATE users 
+        SET name="${attrs.name}", email="${attrs.email}"
+        WHERE id='${this.id}'`, { type: dbConnection.QueryTypes.UPDATE });
     return true;
   }
 }
