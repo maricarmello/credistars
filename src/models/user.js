@@ -24,11 +24,9 @@ class User {
   }
 
   static async create(attrs) {
-    attrs.id = User.storedData.length; 
     let users = await dbConnection.query(`INSERT INTO users (name, email) 
         VALUES ("${attrs.name}", "${attrs.email}")`, { type: dbConnection.QueryTypes.INSERT });
 
-    User.storedData.push(new User(attrs));
     return true;
   }
 

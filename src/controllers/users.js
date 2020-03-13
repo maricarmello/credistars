@@ -6,7 +6,7 @@ module.exports = {
     return response.view('users/index', { users: users });
   },
   create: (request, response) => {
-    if (User.create({ name: request.query.name })) {
+    if (User.create({ name: request.payload.name, email: request.payload.email })) {
       return `OK`;
     } {
       return `Error`;

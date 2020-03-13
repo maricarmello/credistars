@@ -19,8 +19,8 @@ module.exports = [
       handler: users.update
   },
   {
-      method: 'GET',
-      path: '/users/create',
+      method: 'POST',
+      path: '/users',
       handler: users.create
   },
   {
