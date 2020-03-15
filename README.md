@@ -50,3 +50,6 @@ We will be using a open source bootstrap template:
 
 https://github.com/BlackrockDigital/startbootstrap-sb-admin-2
 
+# Running tests
+
+The command `npm run test` will run tests from /tests folder
