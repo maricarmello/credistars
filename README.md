@@ -21,13 +21,6 @@ git checkout "$(git describe --abbrev=0 --tags)"
 
 6) run `asdf install` inside the project's folder
 
-# Project Setup 
-
-1. Clone repo
-2. Run `npm install`
-3. Run `npm run start:devserver` if you change any file on the src folder the server will restart itself automagically
-4. Visit http://localhost:3000/
-
 # Database
 
 We will use SQL Lite as database. 
@@ -59,7 +52,15 @@ The command `npm run test` will run tests from /tests folder. We are using the `
 
 https://jestjs.io/docs/en/getting-started
 
-# Studying TODOs
+# Project Setup 
+
+1. Clone repo
+2. Run `npm install`
+3. Run migrations to create the `users` table `node src/run_migrations.js`
+4. Run `npm run start:devserver` if you change any file on the src folder the server will restart itself automagically
+5. Visit http://localhost:3000/
+
+# TODOs
 
 ## Basic routing
 
