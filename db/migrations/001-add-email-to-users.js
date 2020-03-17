@@ -9,6 +9,6 @@ module.exports = {
     })
   },
   down: async (query) => {
-    await query.addColumn('users', 'email')
+    await query.removeColumn('users', 'email')
   }
 }
