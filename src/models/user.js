@@ -43,6 +43,8 @@ class User {
     await dbConnection.query(`UPDATE users 
         SET name="${attrs.name}", email="${attrs.email}"
         WHERE id='${this.id}'`, { type: dbConnection.QueryTypes.UPDATE });
+    this.name = attrs.name;
+    this.email = attrs.email;
     return true;
   }
 }
