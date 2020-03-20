@@ -10,7 +10,7 @@ module.exports = {
 
     if (await User.create(dataToSave)) {
       return response.redirect('/users');
-    } {
+    } else {
       return response.view('users/form', { userToEdit: dataToSave });
     }
   },
@@ -42,7 +42,7 @@ module.exports = {
     
     if (user.destroy()) {
       return response.redirect('/users');
-    } {
+    } else {
       return `Error`;
     }
   },
