@@ -14,7 +14,6 @@ git checkout "$(git describe --abbrev=0 --tags)"
 
 3) run `asdf plugin add nodejs`
 
-
 4) run `sudo apt-get install gpg`
 
 5) run `bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring`
@@ -29,6 +28,7 @@ SQLite is a lightweight database implementation that allows us to store all our 
 
 It doesn't need any aditional steps besides the initial `npm install` to work and we can query the database using SQL: `SELECT`, `INSERT`, `UPDATE`, etc...
 
+You can explore and test queries openning the `database.sqlite` file under `db` folder using the following program: https://sqlitebrowser.org/
 ## Managing database schema changes
 
 This project uses the `umzug` library to keep track of database changes and keep your current database in sync with those changes. 
