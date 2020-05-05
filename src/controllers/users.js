@@ -6,7 +6,12 @@ module.exports = {
     return response.view('users/index', { users: users });
   },
   create: async (request, response) => {
-    const dataToSave = { name: request.payload.user_name, email: request.payload.user_email };
+    const dataToSave = { 
+      name: request.payload.user_name, 
+      surname: request.payload.user_surname, 
+      email: request.payload.user_email, 
+      password: request.payload.user_password 
+    };
 
     if (await User.create(dataToSave)) {
       return response.redirect('/users');
@@ -27,8 +32,7 @@ module.exports = {
     let user = await User.findById(request.params.id); 
 
     let attrs_to_update = {
-      name: request.payload.user_name,
-      email: request.payload.user_email
+      password: request.payload.user_password,
     }
 
     if (await user.updateAttributes(attrs_to_update)) {

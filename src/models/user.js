@@ -3,7 +3,9 @@ const dbConnection = require('../db_connection');
 class User {
   constructor(attrs){
     this.name = attrs.name;
+    this.surname = attrs.surname;
     this.email = attrs.email;
+    this.password = attrs.password;
     this.id = attrs.id;
   };
 
@@ -25,8 +27,8 @@ class User {
   }
 
   static async create(attrs) {
-    await dbConnection.query(`INSERT INTO users (name, email) 
-        VALUES ("${attrs.name}", "${attrs.email}")`, { type: dbConnection.QueryTypes.INSERT });
+    await dbConnection.query(`INSERT INTO users (name, surname, email, password) 
+        VALUES ("${attrs.name}", "${attrs.surname}", "${attrs.email}", "${attrs.password}")`, { type: dbConnection.QueryTypes.INSERT });
 
     return true;
   }
@@ -41,10 +43,12 @@ class User {
 
   async updateAttributes(attrs) {
     await dbConnection.query(`UPDATE users 
-        SET name="${attrs.name}", email="${attrs.email}"
+        SET name="${attrs.name}", surname="${attrs.surname}", email="${attrs.email}", password="${attrs.password}"
         WHERE id='${this.id}'`, { type: dbConnection.QueryTypes.UPDATE });
-    this.name = attrs.name;
-    this.email = attrs.email;
+        this.name = attrs.name;
+        this.surname = attrs.surname;
+        this.email = attrs.email;
+        this.password = attrs.password;
     return true;
   }
 }

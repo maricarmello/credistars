@@ -18,12 +18,19 @@
 <form class="user" action='<%= formAction %>' method='POST'>
   <div class="form-group row">
     <div class="col-sm-6">
-      <input value='<%= userToEdit.name %>' type="text" class="form-control" placeholder='Name' name='user_name'>
+      <input value='<%= userToEdit.name %>' type="text" class="form-control" placeholder='Nome' name='user_name'>
+    </div>
+    <div class="col-sm-6">
+      <input value='<%= userToEdit.surname %>' type="text" class="form-control" placeholder='Sobrenome' name='user_surname'>
     </div>
     <div class="col-sm-6">
       <input value='<%= userToEdit.email %>' type="text" class="form-control" placeholder='Email' name='user_email'>
     </div>
+    <div class="col-sm-6">
+      <input value='<%= userToEdit.password %>' type="text" class="form-control" placeholder='password' name='user_password'>
+    </div>
   </div>
+  
   <div class="form-group row">
     <button class="btn btn-primary btn-user btn-block">
       Salvar

@@ -4,31 +4,35 @@ const Sequelize = require('sequelize');
 module.exports = {
   // `query` was passed in the `index.js` file
   up: async (query) => {
-    await query.createTable('users', {
-      id_user: {
+    await query.createTable('transactions', {
+      id_transaction: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
-      name: {
-        type: Sequelize.STRING,
+      id_user_sender: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      surname: {
-        type: Sequelize.STRING,
+      id_user_receiver: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      email: {
-        type: Sequelize.STRING,
+      quantity: {
+        type: Sequelize.SMALLINT,
         allowNull: false
       },
-      password: {
+      message: {
         type: Sequelize.STRING,
+        allowNull: true
+      },
+      date: {
+        type: Sequelize.TEXT,
         allowNull: false
       }
     })
   },
   down: async (query) => {
-    await query.dropTable('users')
+    await query.dropTable('transactions')
   }
 }
