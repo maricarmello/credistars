@@ -2,11 +2,12 @@ const Path = require('path');
 
 const home = require('./controllers/home.js');
 const users = require('./controllers/users.js');
+const login = require('./controllers/login.js');
 
 module.exports = [
   {
     method: 'GET',
-    path: '/',
+    path: '/home',
     handler: home.dashboard
   },
   {
@@ -34,6 +35,11 @@ module.exports = [
       path: '/users',
       handler: users.create
   },
+  {
+    method: 'GET',
+    path: '/login',
+    handler: login.index
+},
   {
     // Generic route to server static files
     // If none of the routes bellow have matched with the path
