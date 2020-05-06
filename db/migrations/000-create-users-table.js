@@ -5,7 +5,7 @@ module.exports = {
   // `query` was passed in the `index.js` file
   up: async (query) => {
     await query.createTable('users', {
-      id_user: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true

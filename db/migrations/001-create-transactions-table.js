@@ -5,16 +5,16 @@ module.exports = {
   // `query` was passed in the `index.js` file
   up: async (query) => {
     await query.createTable('transactions', {
-      id_transaction: {
+      transaction_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
-      id_user_sender: {
+      user_id_sender: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      id_user_receiver: {
+      user_id_receiver: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
@@ -25,6 +25,10 @@ module.exports = {
       message: {
         type: Sequelize.STRING,
         allowNull: true
+      },
+      value:{
+        type: Sequelize.STRING,
+        allowNull: false
       },
       date: {
         type: Sequelize.TEXT,
