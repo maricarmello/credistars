@@ -25,10 +25,10 @@
               <div class=" col-sm-5">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Nome</label>
-                  <select class="form-control">
+                  <select name="user_id_receiver" class="form-control">
                     <option selected disabled>Escolha alguém</option>
                     <% users.forEach((user) => { %>
-                    <option name="user_id_receiver" value='<%= user.user_id %>'><%= user.name +" "+ user.surname %></option>
+                    <option value='<%= user.user_id %>'><%= user.name +" "+ user.surname %></option>
                     <% }) %>
                   </select>
                 </div>
@@ -36,7 +36,7 @@
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Quantidade</label>
-                  <input value="teste" min="1"  type="number" class="form-control" name="quantity" placeholder="0" oninput="validity.valid||(value='');" >
+                  <input min="1"  type="number" class="form-control" name="quantity" placeholder="0" oninput="validity.valid||(value='');" >
                 </div>
               </div>
               <div class=" col-sm-5">
@@ -57,7 +57,7 @@
               <div class="col-sm-12" >
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Mensagem</label>
-                  <textarea style="resize:none"type="text" class="form-control"  name="mesage" placeholder="Deixe aqui sua mensagem!" ></textarea>
+                  <textarea style="resize:none" type="text" class="form-control"  name="message" placeholder="Deixe aqui sua mensagem!" ></textarea>
                 </div>
               </div>
             </div>

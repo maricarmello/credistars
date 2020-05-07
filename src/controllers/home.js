@@ -18,7 +18,7 @@ module.exports = {
       user_id_sender: currentUserId,
       user_id_receiver: request.payload.user_id_receiver,
       quantity: request.payload.quantity,
-      massage: request.payload.massage,
+      message: request.payload.message,
       value: request.payload.value,
       date: new Date()
     };

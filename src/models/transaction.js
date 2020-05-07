@@ -6,7 +6,7 @@ constructor(attrs){
     this.user_id_sender = attrs.user_id_sender;
     this.user_id_receiver = attrs.user_id_receiver;
     this.quantity = attrs.quantity;
-    this.massage = attrs.massage;
+    this.message = attrs.message;
     this.value = attrs.value;
     this.date = attrs.date;
 };
