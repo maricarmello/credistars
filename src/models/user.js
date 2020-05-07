@@ -15,7 +15,25 @@ class User {
     return data.map((attr) => new User(attr));
   }
 
-  static async findById_(user_id) {
+  static async findByEmail(user_email) {
+    let data = await dbConnection.query("SELECT * FROM `users` WHERE email = :kkk", 
+    { 
+      replacements: {
+        kkk: user_email
+      },
+      type: dbConnection.QueryTypes.SELECT 
+    });
+    console.log("blablabl"+ data)
+    if (data != null){
+      console.log("dkkkkkk" + data)
+    return new User(data[0]);
+    } else{
+      console.log("uhduahduh" + data)
+      return null
+    }
+  }
+
+  static async findById(user_id) {
     let data = await dbConnection.query("SELECT * FROM `users` WHERE user_id = :user_id", 
     { 
       replacements: {

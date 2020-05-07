@@ -39,7 +39,12 @@ module.exports = [
     method: 'GET',
     path: '/login',
     handler: login.index
-},
+  },
+  {
+    method: 'POST',
+    path: '/login',
+    handler: login.currentUser
+  },
   {
     // Generic route to server static files
     // If none of the routes bellow have matched with the path
