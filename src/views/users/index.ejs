@@ -11,16 +11,14 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Email</th>
-        <th>Actions</th>
       </tr>
     </thead>
   
     <tbody>
   
       <% users.forEach((user) => { %>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
+          <td><%= user.name +" "+ user.surname %></td>
+
           <td>
             <a href="/users/form/<%= user.id %>" class='btn btn-success btn-sm'>
               <i class="fas fa-edit"></i>

@@ -2,7 +2,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+  <h1 class="h3 mb-0 text-gray-800">Olá PESSOA, você já acumulou X estrelitas!</h1>
   <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
       class="fa fa-sign-out-alt fa-sm text-white-50"></i> Sair</a>
 </div>
@@ -15,7 +15,7 @@
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Vamos compartilhar estrelitas?</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Vamos compartilhar estrelitas? Você ainda tem Y disponíveis esse mês!</h6>
       </div>
       <!-- Card Body -->
       <div class="card-body">
@@ -27,35 +27,37 @@
                   <label for="exampleFormControlSelect1">Nome</label>
                   <select class="form-control">
                     <option selected disabled>Escolha alguém</option>
-                    <option>Mariana</option>
-                    <option>Julia</option>
-                    <option>Lucas</option>
-                    <option>Pedro</option>
+                    <% users.forEach((user) => { %>
+                    <option><%= user.name +" "+ user.surname %></option>
+                    <% }) %>
                   </select>
                 </div>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Quantidade</label>
-                  <input value="teste" type="number" class="form-control" name="quantity" placeholder="0" >
+                  <input value="teste" min="0"  type="number" class="form-control" name="quantity" placeholder="0" oninput="validity.valid||(value='');" >
                 </div>
               </div>
               <div class=" col-sm-5">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Valor</label>
-                  <select class="form-control">
-                    <option selected disabled>Escolha um dos valores</option>
-                    <option>BrutallyHonest</option>
-                    <option>TrueTeamPlayers</option>
-                    <option>ThinkLikeOwners</option>
-                    <option>LoveOurCostumes</option>
+                  <select class="form-control" aria-placeholder="Selecione um valor">
+                    <option selected disabled>Selecione um dos valores</option>
+                    <option>#LoveOurCostumes</option>
+                    <option>#PlayToWin</option>
+                    <option>#TrueTeamPlayers</option>
+                    <option>#Warriors</option>
+                    <option>#LearnFast</option>
+                    <option>#BrutallyHonest</option>
+                    <option>#ThinkLikeOwners</option>
                   </select>
                 </div>
               </div>
               <div class="col-sm-12" >
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Mensagem</label>
-                  <textarea type="text" class="form-control"  name="mesage" placeholder="Deixe aqui sua mensagem!" ></textarea>
+                  <textarea style="resize:none"type="text" class="form-control"  name="mesage" placeholder="Deixe aqui sua mensagem!" ></textarea>
                 </div>
               </div>
             </div>

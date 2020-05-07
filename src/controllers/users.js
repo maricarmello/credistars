@@ -22,14 +22,14 @@ module.exports = {
   form: async (request, response) => {
     let user = {}
 
-    if (request.params.id) {
-      user = await User.findById(request.params.id); 
+    if (request.params.user_id) {
+      user = await User.findById(request.params.user_id); 
     }
 
     return response.view('users/form', { userToEdit: user });
   },
   update: async (request, response) => {
-    let user = await User.findById(request.params.id); 
+    let user = await User.findById(request.params.user_id); 
 
     let attrs_to_update = {
       password: request.payload.user_password,
@@ -42,7 +42,7 @@ module.exports = {
     }
   },
   destroy: async (request, response) => {
-    let user = await User.findById(request.params.id); 
+    let user = await User.findById(request.params.user_id); 
     
     if (user.destroy()) {
       return response.redirect('/users');
