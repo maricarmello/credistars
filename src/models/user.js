@@ -14,6 +14,17 @@ class User {
     let data = await dbConnection.query("SELECT * FROM `users`", { type: dbConnection.QueryTypes.SELECT });
     return data.map((attr) => new User(attr));
   }
+  static async possibleReceivers(currentId) {
+    let data = await dbConnection.query("SELECT * FROM `users` WHERE user_id != :currentId", 
+    { 
+      replacements: {
+        currentId: currentId
+      },
+      type: dbConnection.QueryTypes.SELECT 
+    });
+    return data.map((attr) => new User(attr));
+  }
+  
 
   static async findByEmail(user_email) {
     let data = await dbConnection.query("SELECT * FROM `users` WHERE email = :kkk", 
@@ -23,12 +34,9 @@ class User {
       },
       type: dbConnection.QueryTypes.SELECT 
     });
-    console.log("blablabl"+ data)
-    if (data != null){
-      console.log("dkkkkkk" + data)
-    return new User(data[0]);
+    if (data.length > 0 ){
+     return new User(data[0]);
     } else{
-      console.log("uhduahduh" + data)
       return null
     }
   }

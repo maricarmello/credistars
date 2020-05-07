@@ -20,7 +20,7 @@
       <!-- Card Body -->
       <div class="card-body">
         <div class="chart-area">
-          <form class="user">
+          <form class="user" method="POST" action="/home" >
             <div class="form-group row">
               <div class=" col-sm-5">
                 <div class="form-group">
@@ -36,7 +36,7 @@
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Quantidade</label>
-                  <input value="teste" min="0"  type="number" class="form-control" name="quantity" placeholder="0" oninput="validity.valid||(value='');" >
+                  <input value="teste" min="1"  type="number" class="form-control" name="quantity" placeholder="0" oninput="validity.valid||(value='');" >
                 </div>
               </div>
               <div class=" col-sm-5">

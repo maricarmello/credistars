@@ -11,6 +11,11 @@ module.exports = [
     handler: home.dashboard
   },
   {
+    method: 'POST',
+    path: '/home',
+    handler: home.sendStars
+  },
+  {
       method: 'GET',
       path: '/users',
       handler: users.index
