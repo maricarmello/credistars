@@ -11,7 +11,7 @@ constructor(attrs){
     this.date = attrs.date;
 };
 static async all() {
-let data = await dbConnection.query("SELECT * FROM `transactions`", { type: dbConnection.QueryTypes.SELECT });
+let data = await dbConnection.query("SELECT * FROM `transactions` ORDER BY transaction_id DESC", { type: dbConnection.QueryTypes.SELECT });
 return data.map((attr) => new Transaction(attr));
 }
 static async create(attrs) {

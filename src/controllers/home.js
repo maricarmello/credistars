@@ -6,11 +6,13 @@ module.exports = {
   
   dashboard: async (request, response) => {
 
+    let currentUser = await User.findById(currentUserId);
+
     let users = await User.possibleReceivers(currentUserId);
 
     let transactions = await Transaction.all();
 
-    return response.view('home/dashboard', { users: users, transactions: transactions });
+    return response.view('home/dashboard', { currentUser:currentUser, users: users, transactions: transactions });
   },
   sendStars: async(request, response) =>{
 
