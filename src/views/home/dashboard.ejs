@@ -133,9 +133,10 @@
       <div class="card-body">
         <div class="text-center">
         </div>
-        <p><%= (transaction.user_id_sender) %> recebeu + <%= (transaction.quantity) %> de <%= (transaction.user_id_receiver) %></p>
+        <p><%= (transaction.receiver) %> recebeu + <%= (transaction.quantity) %> de <%= (transaction.sender) %></p>
         <p><%= transaction.message %></p>
-        <p>Data:<%= (transaction.date) %></p>
+        <div class="text-right" ><p ><%= (transaction.date) %></p></div>
+        
       </div>
     </div>
     <% }) %>
