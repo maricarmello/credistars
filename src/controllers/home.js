@@ -20,12 +20,15 @@ module.exports = {
     return response.view('home/dashboard', { currentUser:currentUser, users: users, transactions: transactions, mytransactions: mytransactions });
   },
   sendStars: async(request, response) =>{
-    let date = new Date();
-    let hour = date.getHours();
-    let min = date.getMinutes();
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
+
+
+    function currentDate() {
+      function pad(m) {
+          return (m < 10) ? '0' + m : m;
+      }
+      var date = new Date();
+      return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " as " + [date.getHours(), date.getMinutes()].map(pad).join(':');
+  }
 
 
     let transaction = {
@@ -34,7 +37,7 @@ module.exports = {
       quantity: request.payload.quantity,
       message: request.payload.message,
       value: request.payload.value,
-      date: day + "/" + (month+1) + "/" + year + " as " + hour + ':' + min 
+      date: currentDate()
     };
     await Transaction.create(transaction);
     await Accumulated.updateSender(transaction.user_id_sender, transaction.quantity)
