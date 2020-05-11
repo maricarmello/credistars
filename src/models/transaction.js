@@ -26,7 +26,25 @@ static async create(attrs) {
 
     return true;
   }
+  static async myfeed(currentId) {
+    let data = await dbConnection.query(
+        "SELECT t.transaction_id, us.name as sender, ur.name as receiver, t.quantity, t.message, t.value, t.date " + 
+        "FROM transactions t " +
+        "INNER JOIN users us ON us.user_id = t.user_id_sender " +
+        "INNER JOIN users ur ON ur.user_id = t.user_id_receiver " +
+        "WHERE us.user_id == :currentId OR ur.user_id == :currentId " +
+        "ORDER BY transaction_id DESC " + 
+        "LIMIT 3", 
+        { 
+            replacements: {
+              currentId: currentId
+            },
+            type: dbConnection.QueryTypes.SELECT 
+        });
+    return data.map((attr) => new Transaction(attr));
+    }
 }
+
 
 
 module.exports = Transaction;

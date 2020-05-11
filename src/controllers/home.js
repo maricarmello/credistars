@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const Transaction = require('../models/transaction')
 
-let currentUserId = 1;
+let currentUserId = 2;
 
 module.exports = {
   
@@ -11,9 +11,11 @@ module.exports = {
 
     let users = await User.possibleReceivers(currentUserId);
 
-    let transactions = await Transaction.all();
+    let transactions = await Transaction.all(currentUserId);
 
-    return response.view('home/dashboard', { currentUser:currentUser, users: users, transactions: transactions });
+    let mytransactions = await Transaction.myfeed(currentUserId);
+
+    return response.view('home/dashboard', { currentUser:currentUser, users: users, transactions: transactions, mytransactions: mytransactions });
   },
   sendStars: async(request, response) =>{
     let date = new Date();
