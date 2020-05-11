@@ -27,10 +27,10 @@ class User {
   
 
   static async findByEmail(user_email) {
-    let data = await dbConnection.query("SELECT * FROM `users` WHERE email = :kkk", 
+    let data = await dbConnection.query("SELECT * FROM `users` WHERE email = :email", 
     { 
       replacements: {
-        kkk: user_email
+        email: user_email
       },
       type: dbConnection.QueryTypes.SELECT 
     });

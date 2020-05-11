@@ -1,7 +1,9 @@
 const User = require('../models/user');
 const Transaction = require('../models/transaction')
+const Accumulated = require('../models/accumulated')
 
-let currentUserId = 2;
+
+let currentUserId = 1;
 
 module.exports = {
   
@@ -35,6 +37,9 @@ module.exports = {
       date: day + "/" + (month+1) + "/" + year + " as " + hour + ':' + min 
     };
     await Transaction.create(transaction);
+    await Accumulated.updateSender(transaction.user_id_sender, transaction.quantity)
+    await Accumulated.updateReceiver(transaction.user_id_receiver, transaction.quantity)
+    
     return response.redirect('/home')
   }
 }

@@ -25,8 +25,8 @@ static async create(attrs) {
         VALUES ("${attrs.user_id_sender}", "${attrs.user_id_receiver}", "${attrs.quantity}", "${attrs.message}", "${attrs.value}", "${attrs.date}")`, { type: dbConnection.QueryTypes.INSERT });
 
     return true;
-  }
-  static async myfeed(currentId) {
+}
+static async myfeed(currentId) {
     let data = await dbConnection.query(
         "SELECT t.transaction_id, us.name as sender, ur.name as receiver, t.quantity, t.message, t.value, t.date " + 
         "FROM transactions t " +
