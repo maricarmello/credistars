@@ -7,6 +7,17 @@ constructor(attrs){
   this.received = attrs.received;
 };
 
+static async show(currentUserId) {
+  let data = await dbConnection.query("SELECT a.user_id, a.to_send, a.received " +
+  "FROM accumulated a " +
+  "WHERE user_id = :currentUserId", {
+    replacements: {
+      currentUserId: currentUserId,
+    },
+    type: dbConnection.QueryTypes.SELECT });
+  return data.map((attr) => new Accumulated(attr));
+}
+
   static async updateSender(user_id_sender, quantity) {
       await dbConnection.query(`UPDATE accumulated 
           SET to_send = to_send-:quantity

@@ -15,9 +15,14 @@ module.exports = {
 
     let transactions = await Transaction.all(currentUserId);
 
-    let mytransactions = await Transaction.myfeed(currentUserId);
+    let myTransactions = await Transaction.myfeed(currentUserId);
 
-    return response.view('home/dashboard', { currentUser:currentUser, users: users, transactions: transactions, mytransactions: mytransactions });
+    let countValues = await Transaction.values()
+
+    let accumulated = await Accumulated.show(currentUserId)
+
+
+    return response.view('home/dashboard', { currentUser:currentUser, users: users, transactions: transactions, myTransactions: myTransactions, countValues: countValues, accumulated: accumulated });
   },
   sendStars: async(request, response) =>{
 

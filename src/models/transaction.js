@@ -32,7 +32,7 @@ static async myfeed(currentId) {
         "FROM transactions t " +
         "INNER JOIN users us ON us.user_id = t.user_id_sender " +
         "INNER JOIN users ur ON ur.user_id = t.user_id_receiver " +
-        "WHERE us.user_id == :currentId OR ur.user_id == :currentId " +
+        "WHERE us.user_id = :currentId OR ur.user_id = :currentId " +
         "ORDER BY transaction_id DESC " + 
         "LIMIT 3", 
         { 
@@ -42,7 +42,16 @@ static async myfeed(currentId) {
             type: dbConnection.QueryTypes.SELECT 
         });
     return data.map((attr) => new Transaction(attr));
-    }
+}
+
+static async values() {
+    await dbConnection.query(
+        "SELECT value, count(*) " +
+        "FROM transactions " +
+        "GROUP BY value ",{ type: dbConnection.QueryTypes.SELECT });
+        return true;
+        }
+        
 }
 
 
