@@ -3,6 +3,48 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Olá <%= currentUser.name %>, você já acumulou <%= accumulated[0].received %> estrelitas!</h1>
+  <script> 
+  var config = {
+  type: 'doughnut',
+  data: {
+    labels: ["LoveOurCustomers", "PlayToWin", "TrueTeamPlayers", "Warriors", "LearnFast", "BrutallyHonest", "ThinkLikeOwners"],
+    datasets: [{
+      data: ["<%= countValues[0].sum %>", "<%= countValues[1].sum %>", 10, 15, 25, 10, 15],
+      backgroundColor: ['#4e73df', '#FFE74C', '#36b9cc', '#246EB9', '#1cc88a', '#F3CA40', '#3E8914'],
+      hoverBackgroundColor: [],
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+}
+  window.onload = function() {
+          // Set new default font family and font color to mimic Bootstrap's default styling
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+// Pie Chart Example
+var ctx = document.getElementById("myPieChart");
+var myPieChart = new Chart(ctx, config);
+};
+
+  </script>
+
   <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
       class="fa fa-sign-out-alt fa-sm text-white-50"></i> Sair</a>
 </div>
@@ -15,7 +57,7 @@
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Vamos compartilhar estrelitas? Você ainda tem <%= accumulated[0].to_send %> disponíveis esse mês!</h6>
+        <h5 class="m-0 font-weight-bold text-primary"> Vamos compartilhar estrelitas? Você ainda tem <%= accumulated[0].to_send %> disponíveis para enviar  esse mês!</h5>
       </div>
       <!-- Card Body -->
       <div class="card-body">
@@ -79,13 +121,7 @@
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Nossos valores!</h6>
-        <div class="dropdown no-arrow">
-          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-          </a>
-        </div>
+        <h5 class="m-0 font-weight-bold text-primary">Nossos valores!</h5>
       </div>
       <!-- Card Body -->
       <div class="card-body">
@@ -95,19 +131,19 @@
         <div class="mt-4 text-center small">
           
           <span  class="mr-2">
-            <i class="fas fa-circle" style="color: #4E73DF;"></i> LoveOurCustomers
+            <i class="fas fa-circle" style="color: #4E73DF;"></i> LoveOurCustomers 
           </span>
           <span class="mr-2">
-            <i class="fas fa-circle text-success"></i> PlayToWin
+            <i class="fas fa-circle" style="color: #FFE74C;"></i> PlayToWin 
           </span>
           <span class="mr-2">
-            <i class="fas fa-circle text-info"></i> TrueTeamPlayers
+            <i class="fas fa-circle" style="color: #36b9cc;"></i> TrueTeamPlayers 
           </span>
           <span class="mr-2">
             <i class="fas fa-circle" style="color: #246EB9;"></i> Warriors
           </span><br>
           <span class="mr-2">
-            <i class="fas fa-circle" style="color: #FFE74C;"></i> LearnFast
+            <i class="fas fa-circle" style="color: #1cc88a;" ></i>  LearnFast 
           </span>
           <span class="mr-2">
             <i class="fas fa-circle" style="color: #F3CA40;" ></i> BrutallyHonest
@@ -134,7 +170,7 @@
     <% transactions.forEach((transaction) => { %>      
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><%= transaction.value %></h6>
+        <h5 class="m-0 font-weight-bold text-primary"><%= transaction.value %></h5>
       </div>
       <div class="card-body">
         <div class="text-center">

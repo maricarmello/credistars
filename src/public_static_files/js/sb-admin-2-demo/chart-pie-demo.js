@@ -1,19 +1,16 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
-const Transaction = require('../../../models/transaction.js');
-
-let countValues = Transaction.values()
 
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: [countValues.sum[0], "Referral", "Social"],
+    labels: ["LoveOurCustomers", "PlayToWin", "TrueTeamPlayers", "Warriors", "LearnFast", "BrutallyHonest", "ThinkLikeOwners"],
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+      data: [10, 15, 10, 15, 25, 10, 15],
+      backgroundColor: ['#4e73df', '#FFE74C', '#36b9cc', '#246EB9', '#1cc88a', '#F3CA40', '#3E8914'],
       hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
