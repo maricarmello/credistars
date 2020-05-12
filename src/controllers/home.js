@@ -21,6 +21,10 @@ module.exports = {
 
     let countValues = await Value.count();
 
+    let labels = await countValues.map((e)=>e.value);
+
+    let data = await countValues.map((e)=>e.sum);
+
     let accumulated = await Accumulated.show(currentUserId);
 
     let superStar = await Accumulated.maxStars();
@@ -33,7 +37,9 @@ module.exports = {
       myTransactions: myTransactions,
       countValues: countValues,
       accumulated: accumulated,
-      superStar: superStar
+      superStar: superStar,
+      labels: labels,
+      data: data
     });
   },
   sendStars: async (request, response) => {

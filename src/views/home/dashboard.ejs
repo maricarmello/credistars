@@ -4,12 +4,14 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Olá <%= currentUser.name %>, você já acumulou <%= accumulated[0].received %> estrelitas!</h1>
   <script> 
+  var labels = "<%= labels %>"
+  var data = "<%= data %>"
   var config = {
   type: 'doughnut',
   data: {
-    labels: ["LoveOurCustomers", "PlayToWin", "TrueTeamPlayers", "Warriors", "LearnFast", "BrutallyHonest", "ThinkLikeOwners"],
+    labels: labels.split(','),
     datasets: [{
-      data: ["<%= countValues[0].sum %>", "<%= countValues[1].sum %>", 10, 15, 25, 10, 15],
+      data: data.split(','),
       backgroundColor: ['#4e73df', '#FFE74C', '#36b9cc', '#246EB9', '#1cc88a', '#F3CA40', '#3E8914'],
       hoverBackgroundColor: [],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -28,7 +30,10 @@
       caretPadding: 10,
     },
     legend: {
-      display: false
+      position: 'bottom',
+      labels:{
+        usePointStyle: true,
+      }
     },
     cutoutPercentage: 80,
   },
@@ -128,30 +133,6 @@ var myPieChart = new Chart(ctx, config);
         <div class="chart-pie pt-4 pb-2">
           <canvas id="myPieChart"></canvas>
         </div>
-        <div class="mt-4 text-center small">
-          
-          <span  class="mr-2">
-            <i class="fas fa-circle" style="color: #4E73DF;"></i> LoveOurCustomers 
-          </span>
-          <span class="mr-2">
-            <i class="fas fa-circle" style="color: #FFE74C;"></i> PlayToWin 
-          </span>
-          <span class="mr-2">
-            <i class="fas fa-circle" style="color: #36b9cc;"></i> TrueTeamPlayers 
-          </span>
-          <span class="mr-2">
-            <i class="fas fa-circle" style="color: #246EB9;"></i> Warriors
-          </span><br>
-          <span class="mr-2">
-            <i class="fas fa-circle" style="color: #1cc88a;" ></i>  LearnFast 
-          </span>
-          <span class="mr-2">
-            <i class="fas fa-circle" style="color: #F3CA40;" ></i> BrutallyHonest
-          </span>
-          <span class="mr-2">
-            <i class="fas fa-circle" style="color: #3E8914;"></i> ThinkLikeOwners
-          </span> 
-        </div>
       </div>
     </div>
   </div>
@@ -182,3 +163,9 @@ var myPieChart = new Chart(ctx, config);
       </div>
     </div>
     <% }) %>
+
+
+
+
+
+    
