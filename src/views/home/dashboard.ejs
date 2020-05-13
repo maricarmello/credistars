@@ -1,53 +1,52 @@
-
-
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Olá <%= currentUser.name %>, você já acumulou <%= accumulated[0].received %> estrelitas!</h1>
-  <script> 
-  var labels = "<%= labels %>"
-  var data = "<%= data %>"
-  var config = {
-  type: 'doughnut',
-  data: {
-    labels: labels.split(','),
-    datasets: [{
-      data: data.split(','),
-      backgroundColor: ['#4e73df', '#FFE74C', '#36b9cc', '#246EB9', '#1cc88a', '#F3CA40', '#3E8914'],
-      hoverBackgroundColor: [],
-      hoverBorderColor: "rgba(234, 236, 244, 1)",
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-    },
-    legend: {
-      position: 'bottom',
-      labels:{
-        usePointStyle: true,
-        fontSize: 13
-      }
-    },
-    cutoutPercentage: 80,
-  },
-}
-  window.onload = function() {
-          // Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+  <h1 class=" m-0 font-weight-bold" style="color: #3377bb;">Olá <%= currentUser.name %>, você já acumulou <%= accumulated[0].received %>
+    <i class="fas fa-star"></i></h1>
+  <script>
+    var labels = "<%= labels %>"
+    var data = "<%= data %>"
+    var config = {
+      type: 'doughnut',
+      data: {
+        labels: labels.split(','),
+        datasets: [{
+          data: data.split(','),
+          backgroundColor: ['#4e73df', '#FFE74C', '#36b9cc', '#246EB9', '#1cc88a', '#F3CA40', '#3E8914'],
+          hoverBackgroundColor: [],
+          hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: '#dddfeb',
+          borderWidth: 1,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+        },
+        legend: {
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            fontSize: 13
+          }
+        },
+        cutoutPercentage: 80,
+      },
+    }
+    window.onload = function () {
+      // Set new default font family and font color to mimic Bootstrap's default styling
+      Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+      Chart.defaults.global.defaultFontColor = '#858796';
 
-// Pie Chart Example
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, config);
-};
+      // Pie Chart Example
+      var ctx = document.getElementById("myPieChart");
+      var myPieChart = new Chart(ctx, config);
+    };
 
   </script>
 
@@ -58,21 +57,23 @@ var myPieChart = new Chart(ctx, config);
 
   <!-- Area Chart -->
   <div class="col-xl-8 col-lg-7">
-    <div class="card shadow mb-4">
+    <div class="card shadow-none mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h5 class="m-0 font-weight-bold text-primary"> Vamos compartilhar estrelitas? Você ainda tem <%= accumulated[0].to_send %> disponíveis para enviar  esse mês!</h5>
+        <h5 class="m-0 font-weight-bold text-primary"> Vamos compartilhar estrelitas? Você ainda tem
+          <%= accumulated[0].to_send %> <i class="fas fa-star" style="font-size: 1rem;"></i> disponíveis para enviar
+          esse mês!</h5>
       </div>
       <!-- Card Body -->
       <div class="card-body">
         <div class="chart-area">
-          <form class="user" method="POST" action="/home" >
+          <form class="user" method="POST" action="/home">
             <div class="form-group row">
               <div class=" col-sm-5">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Nome</label>
                   <select name="user_id_receiver" class="form-control">
-                    <option selected disabled>Escolha alguém</option>
+                    <option selected disabled>Selecione um tripulante</option>
                     <% users.forEach((user) => { %>
                     <option value='<%= user.user_id %>'><%= user.name +" "+ user.surname %></option>
                     <% }) %>
@@ -82,7 +83,8 @@ var myPieChart = new Chart(ctx, config);
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Quantidade</label>
-                  <input min="1"  type="number" class="form-control" name="quantity" placeholder="0" oninput="validity.valid||(value='');" >
+                  <input min="1" type="number" class="form-control" name="quantity" placeholder="0"
+                    oninput="validity.valid||(value='');">
                 </div>
               </div>
               <div class=" col-sm-5">
@@ -100,10 +102,11 @@ var myPieChart = new Chart(ctx, config);
                   </select>
                 </div>
               </div>
-              <div class="col-sm-12" >
+              <div class="col-sm-12">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Mensagem</label>
-                  <textarea style="resize:none" type="text" class="form-control"  name="message" placeholder="Deixe aqui sua mensagem!" ></textarea>
+                  <textarea style="resize:none" type="text" class="form-control" name="message"
+                    placeholder="Deixe aqui sua mensagem!"></textarea>
                 </div>
               </div>
             </div>
@@ -125,7 +128,7 @@ var myPieChart = new Chart(ctx, config);
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h5 class="m-0 font-weight-bold text-primary">Nossos valores!</h5>
+        <h5 class="m-0 font-weight-bold text-primary">Valores mais compartilhados</h5>
       </div>
       <!-- Card Body -->
       <div class="card-body">
@@ -143,28 +146,25 @@ var myPieChart = new Chart(ctx, config);
   <!-- Content Column -->
   <div class="col-xl-12 col-lg-15">
 
-   
-    
-  <div class="col-lg-16 mb-14">
 
-    <% transactions.forEach((transaction) => { %>      
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h5 class="m-0 font-weight-bold text-primary"><%= transaction.value %></h5>
-      </div>
-      <div class="card-body">
-        <div class="text-center">
+
+    <div class="col-lg-16 mb-14">
+
+      <% transactions.forEach((transaction) => { %>
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h5 class="m-0 font-weight-bold text-primary"><%= transaction.value %></h5>
         </div>
-        <p><%= (transaction.receiver) %> recebeu + <%= (transaction.quantity) %> <i class="fas fa-star" style="font-size: 1rem;"></i>  de <%= (transaction.sender) %></p>
-        <p><%= transaction.message %></p>
-        <div class="text-right" ><p ><%= (transaction.date) %></p></div>
-        
+        <div class="card-body">
+          <div class="text-center">
+          </div>
+          <p><%= (transaction.receiver) %> recebeu + <%= (transaction.quantity) %> <i class="fas fa-star"
+              style="font-size: 1rem;"></i> de <%= (transaction.sender) %></p>
+          <p><%= transaction.message %></p>
+          <div class="text-right">
+            <p><%= (transaction.date) %></p>
+          </div>
+
+        </div>
       </div>
-    </div>
-    <% }) %>
-
-
-
-
-
-    
+      <% }) %>
