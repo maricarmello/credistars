@@ -33,6 +33,7 @@
       position: 'bottom',
       labels:{
         usePointStyle: true,
+        fontSize: 13
       }
     },
     cutoutPercentage: 80,
@@ -50,8 +51,6 @@ var myPieChart = new Chart(ctx, config);
 
   </script>
 
-  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-      class="fa fa-sign-out-alt fa-sm text-white-50"></i> Sair</a>
 </div>
 
 <!-- Content Row -->
@@ -130,7 +129,7 @@ var myPieChart = new Chart(ctx, config);
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        <div class="chart-pie pt-4 pb-2">
+        <div class=" pt-4 pb-2 chart-area">
           <canvas id="myPieChart"></canvas>
         </div>
       </div>
