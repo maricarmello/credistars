@@ -9,7 +9,7 @@ class Transaction {
         this.message = attrs.message;
         this.value = attrs.value;
         this.date = attrs.date;
-    };
+    }
     static async all() {
         let data = await dbConnection.query(
             "SELECT t.transaction_id, us.name as sender, ur.name as receiver, t.quantity, t.message, t.value, t.date " +
@@ -18,6 +18,7 @@ class Transaction {
             "INNER JOIN users ur ON ur.user_id = t.user_id_receiver " +
             "ORDER BY transaction_id DESC", { type: dbConnection.QueryTypes.SELECT });
         return data.map((attr) => new Transaction(attr));
+        
     }
 
     static async create(attrs) {

@@ -3,6 +3,7 @@ const Path = require('path');
 const home = require('./controllers/home.js');
 const users = require('./controllers/users.js');
 const login = require('./controllers/login.js');
+const transactionsSchema = require('./schemas/transactions.schemas')
 
 module.exports = [
   {
@@ -13,27 +14,12 @@ module.exports = [
   {
     method: 'POST',
     path: '/home',
-    handler: home.sendStars
-  },
-  {
-      method: 'GET',
-      path: '/users',
-      handler: users.index
-  },
-  {
-      method: 'GET',
-      path: '/users/form/{id?}',
-      handler: users.form
-  },
-  {
-      method: 'GET',
-      path: '/users/delete/{id}',
-      handler: users.destroy
-  },
-  {
-      method: 'POST',
-      path: '/users/{id}',
-      handler: users.update
+    handler: home.sendStars,
+    // options:{
+    //   validate:{
+    //     payload: transactionsSchema,
+    //   }
+    // }
   },
   {
       method: 'POST',

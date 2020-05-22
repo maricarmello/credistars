@@ -2,7 +2,9 @@ const User = require('../models/user');
 const Transaction = require('../models/transaction');
 const Accumulated = require('../models/accumulated');
 const Value = require('../models/values');
-
+const { WebClient } = require('@slack/web-api');
+// Create a new instance of the WebClient class with the token read from your environment variable
+const web = new WebClient(process.env.SLACK_TOKEN);
 
 
 let currentUserId = 1;
@@ -62,9 +64,50 @@ module.exports = {
       value: request.payload.value,
       date: currentDate()
     };
+
+
+
     await Transaction.create(transaction);
     await Accumulated.updateSender(transaction.user_id_sender, transaction.quantity)
     await Accumulated.updateReceiver(transaction.user_id_receiver, transaction.quantity)
+    let sender = await User.findById(transaction.user_id_sender)
+    let receiver = await User.findById(transaction.user_id_receiver)
+    await web.chat.postMessage({
+      channel: '#news',
+        blocks: [
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `:star2:  *${transaction.value}*  :star2:`
+            }
+          },
+          {
+            type: 'divider'
+          },
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `${receiver.name} recebeu +${transaction.quantity} :star2: de ${sender.name}.`
+            }
+          },
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `"${transaction.message}"`
+            }
+          },
+          {
+            type: 'divider'
+          }
+        ]
+    });
+
+
+
+    
 
     return response.redirect('/home')
   }
