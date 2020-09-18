@@ -61,10 +61,18 @@ module.exports = {
         (transaction.date = formatDate(new Date(transaction.date)))
     );
 
+    function paginate(content, pageSize, pageNumber) {
+      if (isNaN(pageNumber)) {
+        pageNumber = 1
+      }
+      return content.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+    }
+
     return response.view('home/dashboard', {
       currentUser: currentUser,
       users: users,
-      transactions: transactions,
+      currentPage: isNaN(request.query.paging)? 1 :request.query.paging,
+      transactions: paginate(transactions, 2, request.query.paging),
       myTransactions: myTransactions,
       countValues: countValues,
       accumulated: accumulated,
