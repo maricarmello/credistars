@@ -83,9 +83,10 @@ module.exports = {
       date: new Date(),
     };
 
-    const availableStars = Accumulated.show(currentUserId).to_send;
+    const availableStars = await Accumulated.show(currentUserId);
 
-    const hasEnoughStars = request.payload.quantity <= availableStars;
+    const hasEnoughStars =
+      request.payload.quantity <= availableStars[0].to_send;
 
     if (hasEnoughStars) {
       await Transaction.create(transaction);

@@ -2,8 +2,9 @@
   function validateQt(maxStars) {
     let input = document.querySelector('#quantity');
     let alert = document.querySelector('#alert');
-
-    if (input.value > maxStars) {
+    console.log('fsoifdsoih', maxStars);
+    console.log(input.value);
+    if (Number(input.value) > maxStars) {
       alert.classList.add('alert');
       alert.classList.add('alert-danger');
       alert.setAttribute('role', 'alert');
@@ -16,6 +17,7 @@
   }
 
   function isFormValidated(maxStars) {
+    console.log(maxStars);
     let quantity = document.querySelector('#quantity');
     let name = document.querySelector('#name');
     let creditasvalue = document.querySelector('#creditasvalue');
