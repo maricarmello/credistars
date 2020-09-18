@@ -40,7 +40,7 @@ module.exports = {
       countValues: countValues,
       accumulated: accumulated,
       superStar: superStar,
-      labels: labels,
+      labels: labels, 
       data: data
     });
   },
@@ -72,7 +72,8 @@ module.exports = {
     await Accumulated.updateReceiver(transaction.user_id_receiver, transaction.quantity)
     let sender = await User.findById(transaction.user_id_sender)
     let receiver = await User.findById(transaction.user_id_receiver)
-    await web.chat.postMessage({
+
+    let message = {
       channel: '#news',
         blocks: [
           {
@@ -103,11 +104,15 @@ module.exports = {
             type: 'divider'
           }
         ]
-    });
-
-
-
+    };
     
+
+    try {
+      await web.chat.postMessage(message)
+    }catch(e){
+      console.log(e);
+    }
+
 
     return response.redirect('/home')
   }
