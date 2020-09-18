@@ -40,7 +40,7 @@ module.exports = {
       countValues: countValues,
       accumulated: accumulated,
       superStar: superStar,
-      labels: labels, 
+      labels: labels,
       data: data
     });
   },
@@ -64,8 +64,6 @@ module.exports = {
       value: request.payload.value,
       date: currentDate()
     };
-
-
 
     await Transaction.create(transaction);
     await Accumulated.updateSender(transaction.user_id_sender, transaction.quantity)
@@ -106,13 +104,11 @@ module.exports = {
         ]
     };
     
-
     try {
       await web.chat.postMessage(message)
-    }catch(e){
+    } catch(e) {
       console.log(e);
     }
-
 
     return response.redirect('/home')
   }
