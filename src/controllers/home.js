@@ -71,7 +71,6 @@ module.exports = {
       superStar: superStar,
       labels: labels,
       data: data,
-      hasEnoughStars: false,
     });
   },
   sendStars: async (request, response) => {
@@ -84,7 +83,9 @@ module.exports = {
       date: new Date(),
     };
 
-    const hasEnoughStars = request.payload.quantity <= 10;
+    const availableStars = Accumulated.show(currentUserId).to_send;
+
+    const hasEnoughStars = request.payload.quantity <= availableStars;
 
     if (hasEnoughStars) {
       await Transaction.create(transaction);
