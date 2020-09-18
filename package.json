@@ -14,6 +14,7 @@
     "@hapi/vision": "^5.5.4",
     "@slack/web-api": "^5.9.0",
     "@slack/webhook": "^5.0.3",
+    "dotenv": "^8.2.0",
     "dummy-data": "0.0.8",
     "ejs": "^3.0.1",
     "hapi": "^18.1.0",
