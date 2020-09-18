@@ -6,12 +6,25 @@ const { WebClient } = require('@slack/web-api');
 // Create a new instance of the WebClient class with the token read from your environment variable
 const web = new WebClient(process.env.SLACK_TOKEN);
 
-
 let currentUserId = 1;
 
-module.exports = {
+function formatDate(date) {
+  function pad(m) {
+    return m < 10 ? '0' + m : m;
+  }
 
+  return (
+    [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+      .map(pad)
+      .join('/') +
+    ' as ' +
+    [date.getHours(), date.getMinutes()].map(pad).join(':')
+  );
+}
+
+module.exports = {
   dashboard: async (request, response) => {
+    const currentDate = new Date();
 
     let currentUser = await User.findById(currentUserId);
 
@@ -23,14 +36,30 @@ module.exports = {
 
     let countValues = await Value.count();
 
-    let labels = await countValues.map((e)=>e.value);
+    let labels = await countValues.map((e) => e.value);
 
-    let data = await countValues.map((e)=>e.sum);
-
-    let accumulated = await Accumulated.show(currentUserId);
+    let data = await countValues.map((e) => e.sum);
 
     let superStar = await Accumulated.maxStars();
 
+    if (
+      myTransactions.length > 0 &&
+      new Date(myTransactions[0].date).getMonth() !== currentDate.getMonth()
+    ) {
+      Accumulated.resetAvailableStars(currentUserId);
+    }
+
+    let accumulated = await Accumulated.show(currentUserId);
+
+    myTransactions.forEach(
+      (transaction) =>
+        (transaction.date = formatDate(new Date(transaction.date)))
+    );
+
+    transactions.forEach(
+      (transaction) =>
+        (transaction.date = formatDate(new Date(transaction.date)))
+    );
 
     return response.view('home/dashboard', {
       currentUser: currentUser,
@@ -41,74 +70,63 @@ module.exports = {
       accumulated: accumulated,
       superStar: superStar,
       labels: labels,
-      data: data
+      data: data,
     });
   },
   sendStars: async (request, response) => {
-
-
-    function currentDate() {
-      function pad(m) {
-        return (m < 10) ? '0' + m : m;
-      }
-      var date = new Date();
-      return [date.getDate(), date.getMonth(), date.getFullYear()].map(pad).join('/') + " as " + [date.getHours(), date.getMinutes()].map(pad).join(':');
-    }
-
-
     let transaction = {
       user_id_sender: currentUserId,
       user_id_receiver: request.payload.user_id_receiver,
       quantity: request.payload.quantity,
       message: request.payload.message,
       value: request.payload.value,
-      date: currentDate()
+      date: new Date(),
     };
 
-
-
     await Transaction.create(transaction);
-    await Accumulated.updateSender(transaction.user_id_sender, transaction.quantity)
-    await Accumulated.updateReceiver(transaction.user_id_receiver, transaction.quantity)
-    let sender = await User.findById(transaction.user_id_sender)
-    let receiver = await User.findById(transaction.user_id_receiver)
+    await Accumulated.updateSender(
+      transaction.user_id_sender,
+      transaction.quantity
+    );
+    await Accumulated.updateReceiver(
+      transaction.user_id_receiver,
+      transaction.quantity
+    );
+    let sender = await User.findById(transaction.user_id_sender);
+    let receiver = await User.findById(transaction.user_id_receiver);
     await web.chat.postMessage({
       channel: '#news',
-        blocks: [
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: `:star2:  *${transaction.value}*  :star2:`
-            }
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `:star2:  *${transaction.value}*  :star2:`,
           },
-          {
-            type: 'divider'
+        },
+        {
+          type: 'divider',
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `${receiver.name} recebeu +${transaction.quantity} :star2: de ${sender.name}.`,
           },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: `${receiver.name} recebeu +${transaction.quantity} :star2: de ${sender.name}.`
-            }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `"${transaction.message}"`,
           },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: `"${transaction.message}"`
-            }
-          },
-          {
-            type: 'divider'
-          }
-        ]
+        },
+        {
+          type: 'divider',
+        },
+      ],
     });
 
-
-
-    
-
-    return response.redirect('/home')
-  }
-}
+    return response.redirect('/home');
+  },
+};
