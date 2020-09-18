@@ -138,8 +138,6 @@ module.exports = {
       }
     }
 
-    return response.redirect('/home', {
-      hasEnoughStars: hasEnoughStars,
-    });
+    return response.redirect('/home');
   },
 };
