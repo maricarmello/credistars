@@ -52,7 +52,7 @@ module.exports = {
         return (m < 10) ? '0' + m : m;
       }
       var date = new Date();
-      return [date.getDate(), date.getMonth(), date.getFullYear()].map(pad).join('/') + " as " + [date.getHours(), date.getMinutes()].map(pad).join(':');
+      return [date.getDate(), date.getMonth() + 1, date.getFullYear()].map(pad).join('/') + " as " + [date.getHours(), date.getMinutes()].map(pad).join(':');
     }
 
 
