@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Transaction = require('../models/transaction');
 const Accumulated = require('../models/accumulated');
 const Value = require('../models/values');
+const Achievement = require('../models/achievement');
 const { WebClient } = require('@slack/web-api');
 // Create a new instance of the WebClient class with the token read from your environment variable
 const web = new WebClient(process.env.SLACK_TOKEN);
@@ -42,6 +43,13 @@ module.exports = {
 
     let superStar = await Accumulated.maxStars();
 
+    let achievements = await {
+      sent_stars: await Achievement.sentStars(currentUserId),
+      received_stars: await Achievement.receivedStars(currentUserId),
+      recognized_for_3_differente_values: await Achievement.threeDistinctValues(currentUserId),
+      recognized_for_all_values: await Achievement.recognizedForEveryValue(currentUserId)
+    }
+
     if (
       myTransactions.length > 0 &&
       new Date(myTransactions[0].date).getMonth() !== currentDate.getMonth()
@@ -71,6 +79,7 @@ module.exports = {
       superStar: superStar,
       labels: labels,
       data: data,
+      achievements: achievements
     });
   },
   sendStars: async (request, response) => {
