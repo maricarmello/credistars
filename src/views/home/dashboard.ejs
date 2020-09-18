@@ -1,3 +1,40 @@
+<script>
+  function validateQt(maxStars) {
+    let input = document.querySelector('#quantity');
+    let alert = document.querySelector('#alert');
+
+    if (input.value > maxStars) {
+      alert.classList.add('alert');
+      alert.classList.add('alert-danger');
+      alert.setAttribute('role', 'alert');
+      alert.innerHTML = 'Você não possui estrelitas o suficiente!';
+    } else {
+      alert.classList.remove('alert');
+      alert.classList.remove('alert-danger');
+      alert.removeAttribute('role');
+    }
+  }
+
+  function isFormValidated(maxStars) {
+    let quantity = document.querySelector('#quantity');
+    let name = document.querySelector('#name');
+    let creditasvalue = document.querySelector('#creditasvalue');
+
+    if (
+      name.value != '' &&
+      creditasvalue.value != '' &&
+      creditasvalue.value != '1' &&
+      quantity.value != '' &&
+      quantity.value <= maxStars
+    ) {
+      let send = document.querySelector('#send');
+      send.disabled = false;
+    } else {
+      send.disabled = true;
+    }
+  }
+</script>
+
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="m-0 font-weight-bold" style="color: #3377bb">
@@ -89,11 +126,18 @@
       <div class="card-body">
         <div class="chart-area">
           <form class="user" method="POST" action="/home">
+            <div id="alert"></div>
+
             <div class="form-group row">
               <div class="col-sm-5">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Nome</label>
-                  <select name="user_id_receiver" class="form-control">
+                  <select
+                    id="name"
+                    name="user_id_receiver"
+                    class="form-control"
+                    onblur="isFormValidated('<%= accumulated[0].to_send %>')"
+                  >
                     <option selected disabled>Selecione um tripulante</option>
                     <% users.forEach((user) => { %>
                     <option value="<%= user.user_id %>">
@@ -105,14 +149,17 @@
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
-                  <label for="exampleFormControlInput1">Quantidade</label>
+                  <label for="quantity">Quantidade</label>
                   <input
                     min="1"
                     type="number"
                     class="form-control"
                     name="quantity"
                     placeholder="1"
-                    oninput="validity.valid||(value='');"
+                    id="quantity"
+                    oninput="validity.valid ||(value='')"
+                    onchange="validateQt('<%= accumulated[0].to_send %>')"
+                    onblur="isFormValidated('<%= accumulated[0].to_send %>')"
                   />
                 </div>
               </div>
@@ -121,10 +168,14 @@
                   <label for="exampleFormControlSelect1">Valor</label>
                   <select
                     name="value"
+                    id="creditasvalue"
                     class="form-control"
                     aria-placeholder="Selecione um valor"
+                    onblur="isFormValidated('<%= accumulated[0].to_send %>')"
                   >
-                    <option selected disabled>Selecione um dos valores</option>
+                    <option value="1" selected disabled>
+                      Selecione um dos valores
+                    </option>
                     <option>#LoveOurCustomers</option>
                     <option>#PlayToWin</option>
                     <option>#TrueTeamPlayers</option>
@@ -139,11 +190,13 @@
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Mensagem</label>
                   <textarea
+                    id="message"
                     style="resize: none"
                     type="text"
                     class="form-control"
                     name="message"
                     placeholder="Deixe aqui sua mensagem!"
+                    onblur="isFormValidated('<%= accumulated[0].to_send %>')"
                   ></textarea>
                 </div>
               </div>
@@ -151,7 +204,11 @@
 
             <div class="form-group row">
               <% if (accumulated[0].to_send > 0) { %>
-              <button class="btn btn-primary btn-user btn-block">
+              <button
+                class="btn btn-primary btn-user btn-block"
+                id="send"
+                disabled="true"
+              >
                 Enviar!
               </button>
               <% } else { %>
