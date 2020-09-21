@@ -85,7 +85,6 @@ module.exports = {
     });
   },
   sendStars: async (request, response) => {
-
     let transaction = {
       user_id_sender: currentUserId,
       user_id_receiver: request.payload.user_id_receiver,
@@ -95,51 +94,63 @@ module.exports = {
       date: new Date(),
     };
 
-    await Transaction.create(transaction);
-    await Accumulated.updateSender(transaction.user_id_sender, transaction.quantity)
-    await Accumulated.updateReceiver(transaction.user_id_receiver, transaction.quantity)
-    let sender = await User.findById(transaction.user_id_sender)
-    let receiver = await User.findById(transaction.user_id_receiver)
+    const availableStars = await Accumulated.show(currentUserId);
 
-    let message = {
-      channel: '#news',
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `:star2:  *${transaction.value}*  :star2:`,
+    const hasEnoughStars =
+      request.payload.quantity <= availableStars[0].to_send;
+
+    if (hasEnoughStars) {
+      await Transaction.create(transaction);
+      await Accumulated.updateSender(
+        transaction.user_id_sender,
+        transaction.quantity
+      );
+      await Accumulated.updateReceiver(
+        transaction.user_id_receiver,
+        transaction.quantity
+      );
+      let sender = await User.findById(transaction.user_id_sender);
+      let receiver = await User.findById(transaction.user_id_receiver);
+      let message = {
+        channel: '#news',
+        blocks: [
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `:star2:  *${transaction.value}*  :star2:`,
+            },
           },
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `${receiver.name} recebeu +${transaction.quantity} :star2: de ${sender.name}.`,
+          {
+            type: 'divider',
           },
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `"${transaction.message}"`,
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `${receiver.name} recebeu +${transaction.quantity} :star2: de ${sender.name}.`,
+            },
           },
-        },
-        {
-          type: 'divider',
-        },
-      ],
-    };
-    
-    try {
-      await web.chat.postMessage(message)
-    } catch(e) {
-      console.log(e);
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `"${transaction.message}"`,
+            },
+          },
+          {
+            type: 'divider',
+          },
+        ],
+      };
+
+      try {
+        await web.chat.postMessage(message);
+      } catch (e) {
+        console.log(e);
+      }
     }
 
-    return response.redirect('/home')
-  }
-}
+    return response.redirect('/home');
+  },
+};
