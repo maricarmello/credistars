@@ -216,3 +216,16 @@
     </div>
   </div>
 </div>
+
+  <div class="row">
+    <% if(parseInt(currentPage) === 1){ %>
+      <div class="col">Previous</div>
+    <% } else{ %>  
+      <div class="col"><a href="?paging=<%=parseInt(currentPage)-1%>" class="previous">Previous</a></div>
+   <% } %>
+  <% if(Math.ceil(totalTransactions.length/2) < parseInt(currentPage) + 1) { %>
+    <div class="col" style="text-align:right">Next</div>
+    <% } else{ %>
+  <div class="col" style="text-align:right"><a href="?paging=<%=parseInt(currentPage)+1%>" class="previous">Next</a></div>
+  <% } %>
+</div>
