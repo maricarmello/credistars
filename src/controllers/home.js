@@ -32,6 +32,8 @@ module.exports = {
 
     let transactions = await Transaction.all(currentUserId);
 
+    let totalTransactions = await Transaction.all(currentUserId);
+
     let myTransactions = await Transaction.myfeed(currentUserId);
 
     let countValues = await Value.count();
@@ -72,6 +74,7 @@ module.exports = {
       currentUser: currentUser,
       users: users,
       currentPage: isNaN(request.query.paging)? 1 :request.query.paging,
+      totalTransactions: totalTransactions,
       transactions: paginate(transactions, 2, request.query.paging),
       myTransactions: myTransactions,
       countValues: countValues,
